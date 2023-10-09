@@ -33,7 +33,43 @@ Nachdem die wichtigsten Einstellungen erledigt sind müssen noch allgemeine Eins
 Zum schluss muss das Image nurnoch geschrieben werden. Dies dauert in der Regel ca. 5 min.
 
 ## 2. Ubuntu einrichten
+
+```
+sudo -s
+apt update
+apt upgrade
+```
+
+Nachdem das System auf dem neusten Stand ist schauen wir nach welche die aktuellste openjdk version ist.
+
 ## 3. Java installieren
+
+mit folgendem Befehl kann man nach der aktuellsten JDK Version suchen
+
+```
+apt search openjdk
+```
+
+nun muss die neuste Version installiert werden.
+
+```
+apt install openjdk-17-jdk-headless
+
+```
+
+nachdem JDK installiert ist muss noch ein Ordner angelegt werden für den Server
+
+```
+mkdir /home/ubuntu/minecraft
+cd /home/ubuntu/minecraft
+```
+
+nachdem wir im Ordner sind laden wir den Server herunter mit folgendem Befehl ([Link](https://www.minecraft.net/en-us/download/server))
+
+```
+wget https://piston-data.mojang.com/v1/objects/5b868151bd02b41319f54c8d4061b8cae84e665c/server.jar
+```
+
 ## 4. Minecraft Server installieren
 ## 5. Server autostart Konfigurieren
 
