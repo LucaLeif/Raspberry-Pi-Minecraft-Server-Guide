@@ -128,8 +128,10 @@ In der Datei sollte ganz unten folgender Text eingefügt werden
 @reboot /home/minecraft/minecraft/screen-create.sh
 ```
 
+# Usage
+
 mit  **screen -r minecraft** kann man sich den aktuellen Prozess ansehen und mit Strg + A und Strg + D geht man wieder aus dem Prozess hinaus. Zum Stoppen des Servers gibt man **stop** ein.
 
 
-
+Zum Verwenden braucht der Raspberry Pi lediglich Strom und ein Ethernet anschlsus.
 
