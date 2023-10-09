@@ -52,10 +52,14 @@ apt search openjdk
 
 nun muss die neuste Version installiert werden.
 
+![6](https://github.com/LucaLeif/Raspberry-Pi-Minecraft-Server-Guide/blob/main/Bilder/jdk.png?raw=true)
+
 ```
 apt install openjdk-17-jdk-headless
 
 ```
+
+## 4. Minecraft Server installieren
 
 nachdem JDK installiert ist muss noch ein Ordner angelegt werden für den Server
 
@@ -66,10 +70,66 @@ cd /home/ubuntu/minecraft
 
 nachdem wir im Ordner sind laden wir den Server herunter mit folgendem Befehl ([Link](https://www.minecraft.net/en-us/download/server))
 
+Einfach Rechtsklick auf den Link und Adresse in das wget Statement kopieren
+
+![7](https://github.com/LucaLeif/Raspberry-Pi-Minecraft-Server-Guide/blob/main/Bilder/mc.png?raw=true)
+
 ```
 wget https://piston-data.mojang.com/v1/objects/5b868151bd02b41319f54c8d4061b8cae84e665c/server.jar
 ```
 
-## 4. Minecraft Server installieren
 ## 5. Server autostart Konfigurieren
+mit folgendem Befehl startet der Server. 
+```
+java -Xmx3G -Xms3G -jar server.jar nogui
+```
+
+Zuerst muss die eula mit "true" bestätigt werden.
+
+```
+nano eula.txt
+```
+
+Nun muss nurnoch das Autostarten eingerichtet werden.
+
+```
+nano /home/minecraft/minecraft/screen-create.sh
+```
+
+hier wird folgender code eingegeben.
+
+```
+#!/bin/bash
+su - root -c "screen -m -d minecraft"
+sleep 5
+screen -S minecraft -X stuff 'cd /home/minecraft/minecraft\n'
+screen -S minecraft -X stuff 'java -Xmx3G -Xms3G -jar server.jar nogui\n'
+```
+
+-Xmx und -Xms sind die angaben des Ram. 3G steht für 3GB.
+
+Man sollte immer mindestens 1 GB ram für das OS überlassen.
+
+Die Datei braucht benötigt noch Rechte zum ausführen.
+
+```
+chmod +x /home/minecraft/minecraft/screen-create.sh
+```
+
+
+
+```
+crontab -e 
+```
+
+In der Datei sollte ganz unten folgender Text eingefügt werden
+
+```
+@reboot /home/minecraft/minecraft/screen-create.sh
+```
+
+mit  **screen -r minecraft** kann man sich den aktuellen Prozess ansehen und mit Strg + A und Strg + D geht man wieder aus dem Prozess hinaus. Zum Stoppen des Servers gibt man **stop** ein.
+
+
+
 
