@@ -13,7 +13,7 @@ Als Speicherplatz habe ich eine SD Karte mit 64 GB verwendet 8 GB sollten aber a
 Als erstes muss Ubuntu Server 20.04.5 LTS (64 Bit) ausgewählt werden
 ![1](https://github.com/LucaLeif/Raspberry-Pi-Minecraft-Server-Guide/blob/main/Bilder/imager1.png?raw=true)
 
-Als nächstes muss eine SD Karte ausgewählt werden.
+Nun musst du noch eine SD Karte auswählen
 
 Im Anschluss müssen noch einige Einstellungen übernommen werden.
 
@@ -32,6 +32,9 @@ Nachdem die wichtigsten Einstellungen erledigt sind müssen noch allgemeine Eins
 
 Zum schluss muss das Image nurnoch geschrieben werden. Dies dauert in der Regel ca. 5 min.
 
+Über Putty greifen wir auf den Pi zu.
+
+
 ## 2. Ubuntu einrichten
 
 ```
@@ -40,11 +43,9 @@ apt update
 apt upgrade
 ```
 
-Nachdem das System auf dem neusten Stand ist schauen wir nach welche die aktuellste openjdk version ist.
-
 ## 3. Java installieren
 
-mit folgendem Befehl kann man nach der aktuellsten JDK Version suchen
+Nachdem das System auf dem neusten Stand ist schauen wir nach welche die aktuellste openjdk version ist.
 
 ```
 apt search openjdk
@@ -56,7 +57,6 @@ nun muss die neuste Version installiert werden.
 
 ```
 apt install openjdk-17-jdk-headless
-
 ```
 
 ## 4. Minecraft Server installieren
@@ -70,7 +70,7 @@ cd /home/ubuntu/minecraft
 
 nachdem wir im Ordner sind laden wir den Server herunter mit folgendem Befehl ([Link](https://www.minecraft.net/en-us/download/server))
 
-Einfach Rechtsklick auf den Link und Adresse in das wget Statement kopieren
+Einfach Rechtsklick auf den Link und die Adresse in das wget Statement kopieren
 
 ![7](https://github.com/LucaLeif/Raspberry-Pi-Minecraft-Server-Guide/blob/main/Bilder/mc.png?raw=true)
 
@@ -90,13 +90,13 @@ Zuerst muss die eula mit "true" bestätigt werden.
 nano eula.txt
 ```
 
-Nun muss nurnoch das Autostarten eingerichtet werden.
+Als nächstes richten wir den Autostart ein
 
 ```
 nano /home/minecraft/minecraft/screen-create.sh
 ```
 
-hier wird folgender code eingegeben.
+In das Shell Skript sollte jetzt folgender Code eingegeben werden
 
 ```
 #!/bin/bash
@@ -110,13 +110,13 @@ screen -S minecraft -X stuff 'java -Xmx3G -Xms3G -jar server.jar nogui\n'
 
 Man sollte immer mindestens 1 GB ram für das OS überlassen.
 
-Die Datei braucht benötigt noch Rechte zum ausführen.
+Die Datei benötigt noch Rechte zum ausführen.
 
 ```
 chmod +x /home/minecraft/minecraft/screen-create.sh
 ```
 
-
+Um den den Server automatisch zu starten sobald er Strom hat, benötigen wir noch eine Einstellung.
 
 ```
 crontab -e 
@@ -126,6 +126,13 @@ In der Datei sollte ganz unten folgender Text eingefügt werden
 
 ```
 @reboot /home/minecraft/minecraft/screen-create.sh
+```
+
+Mit diesem Statement wird die screen-create.sh automatisch ausgeführt und startet den Server.
+Als letztes sollte der Pi einmal neu gestartet werden, um auf nummer sicher zu gehen. Außerdem solltest du einmal den Autostart testen. 
+Sobald der Pi hochgefahren ist kann man mit folgendem Befehl prüfen ob der Prozess läuft
+```
+screen -r minecraft
 ```
 
 # Usage
